@@ -1,13 +1,20 @@
 package edu.umn.cs.csci3081w.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.umn.cs.csci3081w.project.webserver.WebServerSession;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
+
+import javax.websocket.Session;
 
 public class VehicleTest {
 
@@ -21,7 +28,6 @@ public class VehicleTest {
    */
   @BeforeEach
   public void setUp() {
-    Vehicle.TESTING = true;
     List<Stop> stopsIn = new ArrayList<Stop>();
     Stop stop1 = new Stop(0, "test stop 1", new Position(-93.243774, 44.972392));
     Stop stop2 = new Stop(1, "test stop 2", new Position(-93.235071, 44.973580));
@@ -158,20 +164,26 @@ public class VehicleTest {
    */
   @Test
   public void testProvideInfo() {
+    WebServerSession webServerSession = spy(WebServerSession.class);
+    Session sessionDummy = mock(Session.class);
+    doNothing().when(webServerSession).sendJson(Mockito.isA(JsonObject.class));
+    VehicleConcreteSubject vehicleConcreteSubject = new VehicleConcreteSubject(webServerSession);
+    webServerSession.onOpen(sessionDummy);
+    testVehicle.setVehicleSubject(vehicleConcreteSubject);
     testVehicle.update();
     testVehicle.provideInfo();
-    JsonObject testOutput = testVehicle.getTestOutput();
-    String command = testOutput.get("command").getAsString();
+    ArgumentCaptor<JsonObject> messageCaptor = ArgumentCaptor.forClass(JsonObject.class);
+    verify(webServerSession).sendJson(messageCaptor.capture());
+    JsonObject message = messageCaptor.getValue();
     String expectedCommand = "observedVehicle";
-    assertEquals(expectedCommand, command);
-    String observedText = testOutput.get("text").getAsString();
+    assertEquals(expectedCommand, message.get("command").getAsString());
     String expectedText = "1" + System.lineSeparator()
         + "-----------------------------" + System.lineSeparator()
         + "* Type: " + System.lineSeparator()
         + "* Position: (-93.235071,44.973580)" + System.lineSeparator()
         + "* Passengers: 0" + System.lineSeparator()
         + "* CO2: 0" + System.lineSeparator();
-    assertEquals(expectedText, observedText);
+    assertEquals(expectedText, message.get("text").getAsString());
   }
 
   /**
