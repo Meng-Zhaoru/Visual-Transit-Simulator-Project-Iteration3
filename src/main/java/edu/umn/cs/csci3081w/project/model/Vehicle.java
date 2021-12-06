@@ -312,7 +312,6 @@ public abstract class Vehicle implements VehicleObserver {
     }
   }
 
-
   public void setColor(int[] color) {
     this.color = color;
   }
