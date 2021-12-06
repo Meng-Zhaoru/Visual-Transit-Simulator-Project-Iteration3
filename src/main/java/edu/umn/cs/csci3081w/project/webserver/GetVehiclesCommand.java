@@ -36,15 +36,16 @@ public class GetVehiclesCommand extends SimulatorCommand {
       s.addProperty("numPassengers", currVehicle.getPassengers().size());
       s.addProperty("capacity", currVehicle.getCapacity());
       String vehicleType = "";
-      if (currVehicle instanceof SmallBus) {
-        vehicleType = SmallBus.SMALL_BUS_VEHICLE;
-      } else if (currVehicle instanceof LargeBus) {
-        vehicleType = LargeBus.LARGE_BUS_VEHICLE;
-      } else if (currVehicle instanceof ElectricTrain) {
-        vehicleType = ElectricTrain.ELECTRIC_TRAIN_VEHICLE;
-      } else if (currVehicle instanceof DieselTrain) {
-        vehicleType = DieselTrain.DIESEL_TRAIN_VEHICLE;
-      }
+//      if (currVehicle instanceof SmallBus) {
+//        vehicleType = SmallBus.SMALL_BUS_VEHICLE;
+//      } else if (currVehicle instanceof LargeBus) {
+//        vehicleType = LargeBus.LARGE_BUS_VEHICLE;
+//      } else if (currVehicle instanceof ElectricTrain) {
+//        vehicleType = ElectricTrain.ELECTRIC_TRAIN_VEHICLE;
+//      } else if (currVehicle instanceof DieselTrain) {
+//        vehicleType = DieselTrain.DIESEL_TRAIN_VEHICLE;
+//      }
+      vehicleType = currVehicle.getType();
       s.addProperty("type", vehicleType);
       s.addProperty("co2", currVehicle.getCurrentCO2Emission());
       JsonObject positionJsonObject = new JsonObject();
@@ -52,10 +53,11 @@ public class GetVehiclesCommand extends SimulatorCommand {
       positionJsonObject.addProperty("latitude", currVehicle.getPosition().getLatitude());
       s.add("position", positionJsonObject);
       JsonObject colorJsonObject = new JsonObject();
-      colorJsonObject.addProperty("r", 255);
-      colorJsonObject.addProperty("g", 255);
-      colorJsonObject.addProperty("b", 255);
-      colorJsonObject.addProperty("alpha", 255);
+      int[] color = currVehicle.getColor();
+      colorJsonObject.addProperty("r", color[0]);
+      colorJsonObject.addProperty("g", color[1]);
+      colorJsonObject.addProperty("b", color[2]);
+      colorJsonObject.addProperty("alpha", color[3]);
       s.add("color", colorJsonObject);
       vehiclesArray.add(s);
     }

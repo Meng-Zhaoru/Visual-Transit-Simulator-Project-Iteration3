@@ -29,10 +29,12 @@ public class BusFactory implements VehicleFactory {
     if (typeOfVehicle != null && typeOfVehicle.equals(SmallBus.SMALL_BUS_VEHICLE)) {
       generatedVehicle = new SmallBus(counter.getSmallBusIdCounterAndIncrement(),
           line, SmallBus.CAPACITY, SmallBus.SPEED);
+      generatedVehicle = new ColorDecorator(generatedVehicle);
       storageFacility.decrementSmallBusesNum();
     } else if (typeOfVehicle != null && typeOfVehicle.equals(LargeBus.LARGE_BUS_VEHICLE)) {
       generatedVehicle = new LargeBus(counter.getLargeBusIdCounterAndIncrement(), line,
           LargeBus.CAPACITY, LargeBus.SPEED);
+      generatedVehicle = new ColorDecorator(generatedVehicle);
       storageFacility.decrementLargeBusesNum();
     }
     return generatedVehicle;

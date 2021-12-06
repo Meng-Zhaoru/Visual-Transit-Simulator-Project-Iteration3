@@ -22,6 +22,7 @@ public abstract class Vehicle implements VehicleObserver {
   private List<Integer> carbonEmissionHistory;
   private VehicleConcreteSubject vehicleConcreteSubject;
   private JsonObject testOutput;
+  private int[] color = new int[4];
 
 
   /**
@@ -49,6 +50,9 @@ public abstract class Vehicle implements VehicleObserver {
     setPosition(new Position(nextStop.getPosition().getLongitude(),
         nextStop.getPosition().getLatitude()));
     carbonEmissionHistory = new ArrayList<Integer>();
+  }
+
+  protected Vehicle() {
   }
 
   public abstract void report(PrintStream out);
@@ -303,9 +307,30 @@ public abstract class Vehicle implements VehicleObserver {
       return tripCompleted;
     }
   }
-
+  public String getType(){
+    if (this instanceof SmallBus) {
+      return SmallBus.SMALL_BUS_VEHICLE;
+    } else if (this instanceof LargeBus) {
+      return LargeBus.LARGE_BUS_VEHICLE;
+    } else if (this instanceof ElectricTrain) {
+      return ElectricTrain.ELECTRIC_TRAIN_VEHICLE;
+    } else if (this instanceof DieselTrain) {
+      return DieselTrain.DIESEL_TRAIN_VEHICLE;
+    } else{
+      return null;
+    }
+  }
   public JsonObject getTestOutput() {
     return testOutput;
+  }
+
+
+  public void setColor(int[] color) {
+    this.color = color;
+  }
+
+  public int[] getColor() {
+    return color;
   }
 
   public void setVehicleSubject(VehicleConcreteSubject vehicleConcreteSubject) {
