@@ -142,10 +142,6 @@ public class ColorDecorator extends VehicleDecorator{
     return vehicle.provideInfo();
   }
 
-  @Override
-  public JsonObject getTestOutput() {
-    return vehicle.getTestOutput();
-  }
 
   @Override
   public void setVehicleSubject(VehicleConcreteSubject vehicleConcreteSubject) {

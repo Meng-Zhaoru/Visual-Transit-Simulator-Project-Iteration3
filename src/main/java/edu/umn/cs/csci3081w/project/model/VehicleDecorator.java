@@ -64,9 +64,6 @@ public abstract class VehicleDecorator extends Vehicle {
   @Override
   public abstract boolean provideInfo();
 
-  @Override
-  public abstract JsonObject getTestOutput();
-
   public abstract String getType();
 
   public abstract int[] getColor();
