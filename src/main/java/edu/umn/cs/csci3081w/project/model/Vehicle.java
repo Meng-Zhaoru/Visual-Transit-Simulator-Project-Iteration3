@@ -23,7 +23,6 @@ public abstract class Vehicle implements VehicleObserver {
   private int[] color = new int[4];
 
 
-
   /**
    * Constructor for a vehicle.
    *
