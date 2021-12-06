@@ -26,7 +26,6 @@ public class WebServerSessionTest {
     PassengerFactory.DETERMINISTIC_NAMES_COUNT = 0;
     PassengerFactory.DETERMINISTIC_DESTINATION_COUNT = 0;
     RandomPassengerGenerator.DETERMINISTIC = true;
-    Vehicle.TESTING = true;
   }
 
   /**
