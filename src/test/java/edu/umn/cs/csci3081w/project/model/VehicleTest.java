@@ -1,20 +1,21 @@
 package edu.umn.cs.csci3081w.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import com.google.gson.JsonObject;
+import edu.umn.cs.csci3081w.project.webserver.WebServerSession;
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.umn.cs.csci3081w.project.webserver.WebServerSession;
+import javax.websocket.Session;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-
-import javax.websocket.Session;
 
 public class VehicleTest {
 
@@ -133,6 +134,43 @@ public class VehicleTest {
 
   }
 
+  @Test
+  public void testMoveWhenTripIsComplete() {
+
+    assertEquals("test stop 2", testVehicle.getNextStop().getName());
+    assertEquals(1, testVehicle.getNextStop().getId());
+    testVehicle.move();
+
+    assertEquals("test stop 1", testVehicle.getNextStop().getName());
+    assertEquals(0, testVehicle.getNextStop().getId());
+
+    testVehicle.move();
+    assertEquals("test stop 1", testVehicle.getNextStop().getName());
+    assertEquals(0, testVehicle.getNextStop().getId());
+
+    testVehicle.move();
+    assertEquals("test stop 2", testVehicle.getNextStop().getName());
+    assertEquals(1, testVehicle.getNextStop().getId());
+
+    testVehicle.move();
+    assertEquals(null, testVehicle.getNextStop());
+
+    testVehicle.move();
+    assertEquals(null, testVehicle.getNextStop());
+
+  }
+
+  @Test
+  public void testMoveWhenDistanceGreaterThanZero() {
+    testVehicle.setDistanceRemaining(10.0);
+    assertEquals("test stop 2", testVehicle.getNextStop().getName());
+    assertEquals(1, testVehicle.getNextStop().getId());
+    testVehicle.move();
+
+    assertEquals("test stop 2", testVehicle.getNextStop().getName());
+    assertEquals(1, testVehicle.getNextStop().getId());
+  }
+
   /**
    * Tests if update function works properly.
    */
@@ -157,6 +195,15 @@ public class VehicleTest {
     testVehicle.update();
     assertEquals(null, testVehicle.getNextStop());
 
+  }
+
+  @Test
+  public void testUpdateWhenPassengerOn() {
+
+    Passenger testPassenger1 = new Passenger(1, "testPassenger4");
+    testVehicle.loadPassenger(testPassenger1);
+    testVehicle.update();
+    assertEquals(testPassenger1.getTimeOnVehicle(), 2);
   }
 
   /**
@@ -185,6 +232,66 @@ public class VehicleTest {
         + "* CO2: 0" + System.lineSeparator();
     assertEquals(expectedText, message.get("text").getAsString());
   }
+
+  @Test
+  public void testProvideInfoWhenTripIsComplete() {
+    WebServerSession webServerSession = spy(WebServerSession.class);
+    Session sessionDummy = mock(Session.class);
+    doNothing().when(webServerSession).sendJson(Mockito.isA(JsonObject.class));
+    VehicleConcreteSubject vehicleConcreteSubject = new VehicleConcreteSubject(webServerSession);
+    webServerSession.onOpen(sessionDummy);
+    testVehicle.setVehicleSubject(vehicleConcreteSubject);
+    testVehicle.update();
+    testVehicle.update();
+    testVehicle.update();
+    testVehicle.update();
+    testVehicle.provideInfo();
+    ArgumentCaptor<JsonObject> messageCaptor = ArgumentCaptor.forClass(JsonObject.class);
+    verify(webServerSession).sendJson(messageCaptor.capture());
+    JsonObject message = messageCaptor.getValue();
+    String expectedCommand = "observedVehicle";
+    assertEquals(expectedCommand, message.get("command").getAsString());
+    String expectedText = "";
+    assertEquals(expectedText, message.get("text").getAsString());
+  }
+
+  @Test
+  public void testProvideInfoWithHistory() {
+    WebServerSession webServerSession = spy(WebServerSession.class);
+    Session sessionDummy = mock(Session.class);
+    doNothing().when(webServerSession).sendJson(Mockito.isA(JsonObject.class));
+    VehicleConcreteSubject vehicleConcreteSubject = new VehicleConcreteSubject(webServerSession);
+    webServerSession.onOpen(sessionDummy);
+    List<Integer> testList = new ArrayList<>();
+    testList.add(0);
+    testList.add(0);
+    testList.add(0);
+    testList.add(0);
+    testList.add(0);
+    testVehicle.setVehicleSubject(vehicleConcreteSubject);
+    testVehicle.update();
+    testVehicle.setCarbonEmissionHistory(testList);
+    testVehicle.provideInfo();
+    ArgumentCaptor<JsonObject> messageCaptor = ArgumentCaptor.forClass(JsonObject.class);
+    verify(webServerSession).sendJson(messageCaptor.capture());
+    JsonObject message = messageCaptor.getValue();
+    String expectedCommand = "observedVehicle";
+    assertEquals(expectedCommand, message.get("command").getAsString());
+    String expectedText = "1" + System.lineSeparator()
+        + "-----------------------------" + System.lineSeparator()
+        + "* Type: " + System.lineSeparator()
+        + "* Position: (-93.235071,44.973580)" + System.lineSeparator()
+        + "* Passengers: 0" + System.lineSeparator()
+        + "* CO2: 0, 0, 0, 0, 0" + System.lineSeparator();
+    assertEquals(expectedText, message.get("text").getAsString());
+  }
+
+  @Test
+  public void testSetSpeed() {
+    testVehicle.setSpeed(2.0);
+    assertEquals(2.0, testVehicle.getSpeed());
+  }
+
 
   /**
    * Clean up our variables after each test.

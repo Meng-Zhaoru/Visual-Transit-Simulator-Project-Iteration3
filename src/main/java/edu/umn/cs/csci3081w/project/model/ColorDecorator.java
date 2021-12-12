@@ -1,42 +1,38 @@
 package edu.umn.cs.csci3081w.project.model;
 
-import com.google.gson.JsonObject;
-
 import java.io.PrintStream;
 import java.util.List;
 
-public class ColorDecorator extends VehicleDecorator{
-  public ColorDecorator(Vehicle vehicle){
+public class ColorDecorator extends VehicleDecorator {
+
+  /**
+   * Color decorator constructor.
+   * @param vehicle vehicle
+   */
+  public ColorDecorator(Vehicle vehicle) {
     super(vehicle);
-    if(vehicle instanceof SmallBus){
-      if(vehicle.getLine().isIssueExist()){
+    if (vehicle instanceof SmallBus) {
+      if (vehicle.getLine().isIssueExist()) {
         vehicle.setColor(new int[]{122, 0, 25, 155});
-      }
-      else{
+      } else {
         vehicle.setColor(new int[]{122, 0, 25, 255});
       }
-    }
-    else if(vehicle instanceof LargeBus){
-      if(vehicle.getLine().isIssueExist()){
+    } else if (vehicle instanceof LargeBus) {
+      if (vehicle.getLine().isIssueExist()) {
         vehicle.setColor(new int[]{239, 130, 238, 155});
-      }
-      else{
+      } else {
         vehicle.setColor(new int[]{239, 130, 238, 255});
       }
-    }
-    else if(vehicle instanceof ElectricTrain){
-      if(vehicle.getLine().isIssueExist()){
+    } else if (vehicle instanceof ElectricTrain) {
+      if (vehicle.getLine().isIssueExist()) {
         vehicle.setColor(new int[]{60, 179, 113, 155});
-      }
-      else{
+      } else {
         vehicle.setColor(new int[]{60, 179, 113, 255});
       }
-    }
-    else if(vehicle instanceof DieselTrain){
-      if(vehicle.getLine().isIssueExist()){
+    } else if (vehicle instanceof DieselTrain) {
+      if (vehicle.getLine().isIssueExist()) {
         vehicle.setColor(new int[]{255, 204, 51, 155});
-      }
-      else{
+      } else {
         vehicle.setColor(new int[]{255, 204, 51, 255});
       }
     }
@@ -150,11 +146,11 @@ public class ColorDecorator extends VehicleDecorator{
 
   @Override
   public void report(PrintStream out) {
-    return;
+    vehicle.report(out);
   }
 
   @Override
   public int getCurrentCO2Emission() {
-    return 0;
+    return vehicle.getCurrentCO2Emission();
   }
 }

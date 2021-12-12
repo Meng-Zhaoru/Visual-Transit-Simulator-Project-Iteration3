@@ -1,11 +1,13 @@
 package edu.umn.cs.csci3081w.project.webserver;
 
-import edu.umn.cs.csci3081w.project.model.Bus;
 import edu.umn.cs.csci3081w.project.model.BusFactory;
 import edu.umn.cs.csci3081w.project.model.Counter;
+import edu.umn.cs.csci3081w.project.model.DieselTrain;
+import edu.umn.cs.csci3081w.project.model.ElectricTrain;
+import edu.umn.cs.csci3081w.project.model.LargeBus;
 import edu.umn.cs.csci3081w.project.model.Line;
+import edu.umn.cs.csci3081w.project.model.SmallBus;
 import edu.umn.cs.csci3081w.project.model.StorageFacility;
-import edu.umn.cs.csci3081w.project.model.Train;
 import edu.umn.cs.csci3081w.project.model.TrainFactory;
 import edu.umn.cs.csci3081w.project.model.Vehicle;
 import edu.umn.cs.csci3081w.project.model.VehicleConcreteSubject;
@@ -126,9 +128,11 @@ public class VisualTransitSimulator {
       if (currVehicle.isTripComplete()) {
         Vehicle completedTripVehicle = activeVehicles.remove(i);
         completedTripVehicles.add(completedTripVehicle);
-        if (completedTripVehicle instanceof Bus) {
+        if (completedTripVehicle.getType() == SmallBus.SMALL_BUS_VEHICLE
+            || completedTripVehicle.getType() == LargeBus.LARGE_BUS_VEHICLE) {
           busFactory.returnVehicle(completedTripVehicle);
-        } else if (completedTripVehicle instanceof Train) {
+        } else if (completedTripVehicle.getType() == ElectricTrain.ELECTRIC_TRAIN_VEHICLE
+            || completedTripVehicle.getType() == DieselTrain.DIESEL_TRAIN_VEHICLE) {
           trainFactory.returnVehicle(completedTripVehicle);
         }
       } else {
@@ -156,6 +160,50 @@ public class VisualTransitSimulator {
     return activeVehicles;
   }
 
+  public VehicleConcreteSubject getVehicleConcreteSubject() {
+    return vehicleConcreteSubject;
+  }
+
+  public void setActiveVehicles(List<Vehicle> activeVehicles) {
+    this.activeVehicles = activeVehicles;
+  }
+
+  public int getNumTimeSteps() {
+    return numTimeSteps;
+  }
+
+  public List<Integer> getVehicleStartTimings() {
+    return vehicleStartTimings;
+  }
+
+  public int getSimulationTimeElapsed() {
+    return simulationTimeElapsed;
+  }
+
+  public void setNumTimeSteps(int numTimeSteps) {
+    this.numTimeSteps = numTimeSteps;
+  }
+
+  public WebServerSession getWebServerSession() {
+    return webServerSession;
+  }
+
+  public List<Integer> getTimeSinceLastVehicle() {
+    return timeSinceLastVehicle;
+  }
+
+  public StorageFacility getStorageFacility() {
+    return storageFacility;
+  }
+
+  public void setLines(List<Line> lines) {
+    this.lines = lines;
+  }
+
+  public void setLogging(boolean logging) {
+    VisualTransitSimulator.LOGGING = logging;
+  }
+
   /**
    * Registers an observer into the vehicle subject.
    *
@@ -164,4 +212,5 @@ public class VisualTransitSimulator {
   public void addObserver(Vehicle vehicle) {
     vehicleConcreteSubject.attachObserver(vehicle);
   }
+
 }

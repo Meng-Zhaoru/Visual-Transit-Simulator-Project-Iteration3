@@ -21,17 +21,34 @@ public class BusStrategyNightTest {
   @Test
   public void testGetTypeOfVehicle() {
     StorageFacility storageFacility = new StorageFacility(3, 1, 0, 0);
-    BusStrategyNight busStrategyDay = new BusStrategyNight();
+    BusStrategyNight busStrategyNight = new BusStrategyNight();
     String strToCmpr;
     for (int i = 0; i < 1; i++) {
-      strToCmpr = busStrategyDay.getTypeOfVehicle(storageFacility);
+      strToCmpr = busStrategyNight.getTypeOfVehicle(storageFacility);
       assertEquals(SmallBus.SMALL_BUS_VEHICLE, strToCmpr);
-      strToCmpr = busStrategyDay.getTypeOfVehicle(storageFacility);
+      strToCmpr = busStrategyNight.getTypeOfVehicle(storageFacility);
       assertEquals(SmallBus.SMALL_BUS_VEHICLE, strToCmpr);
-      strToCmpr = busStrategyDay.getTypeOfVehicle(storageFacility);
+      strToCmpr = busStrategyNight.getTypeOfVehicle(storageFacility);
       assertEquals(SmallBus.SMALL_BUS_VEHICLE, strToCmpr);
-      strToCmpr = busStrategyDay.getTypeOfVehicle(storageFacility);
+      strToCmpr = busStrategyNight.getTypeOfVehicle(storageFacility);
       assertEquals(LargeBus.LARGE_BUS_VEHICLE, strToCmpr);
+    }
+  }
+
+  /**
+   * Testing to get correct vehicle according to the strategy.
+   */
+  @Test
+  public void testGetTypeOfVehicleNull() {
+    StorageFacility storageFacility = new StorageFacility(3, 0, 0, 0);
+    BusStrategyNight busStrategyNight = new BusStrategyNight();
+    String strToCmpr;
+    for (int i = 0; i < 1; i++) {
+      busStrategyNight.getTypeOfVehicle(storageFacility);
+      busStrategyNight.getTypeOfVehicle(storageFacility);
+      busStrategyNight.getTypeOfVehicle(storageFacility);
+      strToCmpr = busStrategyNight.getTypeOfVehicle(storageFacility);
+      assertEquals(null, strToCmpr);
     }
   }
 }

@@ -109,4 +109,8 @@ public class Line {
   public void createIssue() {
     this.issue.createIssue();
   }
+
+  public Issue getIssue() {
+    return issue;
+  }
 }

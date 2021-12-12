@@ -32,4 +32,36 @@ public class BusStrategyDayTest {
       assertEquals(SmallBus.SMALL_BUS_VEHICLE, strToCmpr);
     }
   }
+
+  /**
+   * Testing to get correct vehicle according to the strategy.
+   */
+  @Test
+  public void testGetTypeOfVehicleNoSmall() {
+    StorageFacility storageFacility = new StorageFacility(0, 2, 0, 0);
+    BusStrategyDay busStrategyDay = new BusStrategyDay();
+    String strToCmpr;
+    for (int i = 0; i < 1; i++) {
+      strToCmpr = busStrategyDay.getTypeOfVehicle(storageFacility);
+      assertEquals(LargeBus.LARGE_BUS_VEHICLE, strToCmpr);
+      strToCmpr = busStrategyDay.getTypeOfVehicle(storageFacility);
+      assertEquals(LargeBus.LARGE_BUS_VEHICLE, strToCmpr);
+      strToCmpr = busStrategyDay.getTypeOfVehicle(storageFacility);
+      assertEquals(null, strToCmpr);
+    }
+  }
+
+  /**
+   * Testing to get correct vehicle according to the strategy.
+   */
+  @Test
+  public void testGetTypeOfVehicleNoLarge() {
+    StorageFacility storageFacility = new StorageFacility(1, 0, 0, 0);
+    BusStrategyDay busStrategyDay = new BusStrategyDay();
+    String strToCmpr;
+    for (int i = 0; i < 1; i++) {
+      strToCmpr = busStrategyDay.getTypeOfVehicle(storageFacility);
+      assertEquals(null, strToCmpr);
+    }
+  }
 }

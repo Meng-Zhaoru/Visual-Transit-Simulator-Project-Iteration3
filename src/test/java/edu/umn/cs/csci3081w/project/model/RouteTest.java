@@ -156,6 +156,43 @@ public class RouteTest {
     }
   }
 
+  /**
+   * Tests reporting functionality.
+   */
+  @Test
+  public void testReportNextStop() {
+    try {
+      simpleTestRouteIn.nextStop();
+      final Charset charset = StandardCharsets.UTF_8;
+      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+      PrintStream testStream = new PrintStream(outputStream, true, charset.name());
+      simpleTestRouteIn.report(testStream);
+      outputStream.flush();
+      String data = outputStream.toString(charset);
+      testStream.close();
+      outputStream.close();
+      String strToCompare =
+          "####Route Info Start####" + System.lineSeparator()
+              + "ID: 0" + System.lineSeparator()
+              + "Name: simpleTestRouteIn" + System.lineSeparator()
+              + "Num stops: 1" + System.lineSeparator()
+              + "****Stops Info Start****" + System.lineSeparator()
+              + "####Stop Info Start####" + System.lineSeparator()
+              + "ID: 0" + System.lineSeparator()
+              + "Name: test stop" + System.lineSeparator()
+              + "Position: 44.972392,-93.243774" + System.lineSeparator()
+              + "****Passengers Info Start****" + System.lineSeparator()
+              + "Num passengers waiting: 0" + System.lineSeparator()
+              + "****Passengers Info End****" + System.lineSeparator()
+              + "####Stop Info End####" + System.lineSeparator()
+              + "****Stops Info End****" + System.lineSeparator()
+              + "####Route Info End####" + System.lineSeparator();
+      assertEquals(strToCompare, data);
+    } catch (IOException ioe) {
+      fail();
+    }
+  }
+
 
   /**
    * Tests if we properly move through stops to end.
@@ -190,6 +227,28 @@ public class RouteTest {
     assertEquals("test stop 1", testRouteOut.prevStop().getName());
     testRouteOut.nextStop();
     assertEquals("test stop 2", testRouteOut.prevStop().getName());
+
+    // test inbound
+    assertEquals("test stop 3", testRouteIn.prevStop().getName());
+    testRouteIn.nextStop();
+    assertEquals("test stop 3", testRouteIn.prevStop().getName());
+    testRouteIn.nextStop();
+    assertEquals("test stop 2", testRouteIn.prevStop().getName());
+  }
+
+  /**
+   * Tests if we can check our previous stop.
+   */
+  @Test
+  public void testPrevStopWhenAtTheEnd() {
+    // test outbound
+    assertEquals("test stop 1", testRouteOut.prevStop().getName());
+    testRouteOut.nextStop();
+    assertEquals("test stop 1", testRouteOut.prevStop().getName());
+    testRouteOut.nextStop();
+    assertEquals("test stop 2", testRouteOut.prevStop().getName());
+    testRouteOut.nextStop();
+    assertEquals("test stop 3", testRouteOut.prevStop().getName());
 
     // test inbound
     assertEquals("test stop 3", testRouteIn.prevStop().getName());

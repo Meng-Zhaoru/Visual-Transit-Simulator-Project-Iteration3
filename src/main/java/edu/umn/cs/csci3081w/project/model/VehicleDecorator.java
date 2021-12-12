@@ -1,13 +1,12 @@
 package edu.umn.cs.csci3081w.project.model;
 
-import com.google.gson.JsonObject;
-
 import java.io.PrintStream;
 import java.util.List;
 
 public abstract class VehicleDecorator extends Vehicle {
   protected Vehicle vehicle;
-  public VehicleDecorator(Vehicle vehicle){
+
+  public VehicleDecorator(Vehicle vehicle) {
     this.vehicle = vehicle;
   }
 

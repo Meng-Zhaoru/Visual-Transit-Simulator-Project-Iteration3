@@ -2,6 +2,7 @@ package edu.umn.cs.csci3081w.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.mock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -176,6 +177,31 @@ public class LineTest {
 
   }
 
+  /**
+   * Tests if update function works properly.
+   */
+  @Test
+  public void testUpdateWithResolvedIssue() {
+
+    testLine.createIssue();
+    testLine.update();
+    testLine.update();
+    testLine.update();
+    testLine.update();
+    testLine.update();
+    testLine.update();
+    testLine.update();
+    testLine.update();
+    testLine.update();
+    testLine.update();
+    assertEquals(0, testLine.getIssue().getCounter());
+
+    testLine.update();
+    assertEquals(0, testLine.getIssue().getCounter());
+
+
+  }
+
 
   /**
    * Tests if update function works properly.
@@ -234,6 +260,22 @@ public class LineTest {
     testLine.update();
 
     assertEquals(false, testLine.isIssueExist());
+
+
+  }
+
+  /**
+   * Tests if isIssueExist function works properly.
+   */
+  @Test
+  public void testNoIssueExist() {
+    Route routeOutDummy = mock(Route.class);
+    Route routeInDummy = mock(Route.class);
+    Line testLine1 = new Line(0, "testLine1", Line.BUS_LINE,
+        routeOutDummy, routeInDummy,
+        null);
+
+    assertEquals(false, testLine1.isIssueExist());
 
 
   }

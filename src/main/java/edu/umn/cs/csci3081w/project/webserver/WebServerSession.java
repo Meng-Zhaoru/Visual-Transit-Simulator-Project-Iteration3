@@ -101,4 +101,12 @@ public class WebServerSession {
     //make session null as the session is closed
     this.session = null;
   }
+
+  public Session getSession() {
+    return session;
+  }
+
+  public WebServerSessionState getWebServerState() {
+    return webServerState;
+  }
 }

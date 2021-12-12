@@ -36,15 +36,6 @@ public class GetVehiclesCommand extends SimulatorCommand {
       s.addProperty("numPassengers", currVehicle.getPassengers().size());
       s.addProperty("capacity", currVehicle.getCapacity());
       String vehicleType = "";
-//      if (currVehicle instanceof SmallBus) {
-//        vehicleType = SmallBus.SMALL_BUS_VEHICLE;
-//      } else if (currVehicle instanceof LargeBus) {
-//        vehicleType = LargeBus.LARGE_BUS_VEHICLE;
-//      } else if (currVehicle instanceof ElectricTrain) {
-//        vehicleType = ElectricTrain.ELECTRIC_TRAIN_VEHICLE;
-//      } else if (currVehicle instanceof DieselTrain) {
-//        vehicleType = DieselTrain.DIESEL_TRAIN_VEHICLE;
-//      }
       vehicleType = currVehicle.getType();
       s.addProperty("type", vehicleType);
       s.addProperty("co2", currVehicle.getCurrentCO2Emission());
