@@ -328,7 +328,8 @@ public class BusFactoryTest {
     Route testRouteOut = new Route(1, "testRouteOut",
         stopsOut, distancesOut, generatorOut);
 
-    Train testTrain = new ElectricTrain(1, new Line(10000, "testLine", "BUS", testRouteOut, testRouteIn,
+    Train testTrain = new ElectricTrain(1,
+        new Line(10000, "testLine", "BUS", testRouteOut, testRouteIn,
         new Issue()), 3, 1.0);
     assertEquals(1, busFactoryday.getStorageFacility().getSmallBusesNum());
     assertEquals(1, busFactoryday.getStorageFacility().getLargeBusesNum());
