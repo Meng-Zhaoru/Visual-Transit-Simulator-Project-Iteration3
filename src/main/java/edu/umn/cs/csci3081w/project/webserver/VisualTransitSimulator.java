@@ -128,11 +128,11 @@ public class VisualTransitSimulator {
       if (currVehicle.isTripComplete()) {
         Vehicle completedTripVehicle = activeVehicles.remove(i);
         completedTripVehicles.add(completedTripVehicle);
-        if (completedTripVehicle.getType() == SmallBus.SMALL_BUS_VEHICLE ||
-            completedTripVehicle.getType() == LargeBus.LARGE_BUS_VEHICLE) {
+        if (completedTripVehicle.getType() == SmallBus.SMALL_BUS_VEHICLE
+            || completedTripVehicle.getType() == LargeBus.LARGE_BUS_VEHICLE) {
           busFactory.returnVehicle(completedTripVehicle);
-        } else if (completedTripVehicle.getType() == ElectricTrain.ELECTRIC_TRAIN_VEHICLE ||
-            completedTripVehicle.getType() == DieselTrain.DIESEL_TRAIN_VEHICLE) {
+        } else if (completedTripVehicle.getType() == ElectricTrain.ELECTRIC_TRAIN_VEHICLE
+            || completedTripVehicle.getType() == DieselTrain.DIESEL_TRAIN_VEHICLE) {
           trainFactory.returnVehicle(completedTripVehicle);
         }
       } else {
