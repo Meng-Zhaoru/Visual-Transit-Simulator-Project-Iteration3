@@ -45,6 +45,12 @@ public class GetVehiclesCommand extends SimulatorCommand {
       s.add("position", positionJsonObject);
       JsonObject colorJsonObject = new JsonObject();
       int[] color = currVehicle.getColor();
+      if(currVehicle.getLine().isIssueExist()){
+        color[3] = 155;
+      }
+      else{
+        color[3] = 255;
+      }
       colorJsonObject.addProperty("r", color[0]);
       colorJsonObject.addProperty("g", color[1]);
       colorJsonObject.addProperty("b", color[2]);

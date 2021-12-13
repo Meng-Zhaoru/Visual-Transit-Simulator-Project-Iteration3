@@ -42,9 +42,9 @@ public class BusFactory implements VehicleFactory {
 
   @Override
   public void returnVehicle(Vehicle vehicle) {
-    if (vehicle instanceof SmallBus) {
+    if (vehicle.getType() == SmallBus.SMALL_BUS_VEHICLE) {
       storageFacility.incrementSmallBusesNum();
-    } else if (vehicle instanceof LargeBus) {
+    } else if (vehicle.getType() == LargeBus.LARGE_BUS_VEHICLE) {
       storageFacility.incrementLargeBusesNum();
     }
   }
