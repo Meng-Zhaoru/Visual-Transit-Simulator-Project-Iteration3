@@ -28,6 +28,9 @@ class ColorDecoratorTest {
   private Route testRouteOut;
   private Route testRouteIn;
 
+  /**
+   * Set up operations before each test runs.
+   */
   @BeforeEach
   void setUp() {
     List<Stop> stopsIn = new ArrayList<Stop>();
@@ -63,6 +66,9 @@ class ColorDecoratorTest {
         new Issue()), 3, 1.0));
   }
 
+  /**
+   * Testing the constructor.
+   */
   @Test
   public void testConstructorNormal() {
     ColorDecorator testColorDecoratorForSmallBus = new ColorDecorator(
@@ -95,10 +101,11 @@ class ColorDecoratorTest {
     ColorDecorator dieselTrainAtIssuedLine = new ColorDecorator(
         new DieselTrain(1, issuedLine, 3, 1.0));
     assertEquals(155, dieselTrainAtIssuedLine.getColor()[3]);
-
-
   }
 
+  /**
+   * Test if isTripComplete works properly.
+   */
   @Test
   public void testIsTripComplete() {
     assertEquals(false, testColorDecorator.isTripComplete());
@@ -109,6 +116,9 @@ class ColorDecoratorTest {
     assertEquals(true, testColorDecorator.isTripComplete());
   }
 
+  /**
+   * Test if loadPassenger works properly.
+   */
   @Test
   public void testLoadPassenger() {
 
@@ -123,6 +133,9 @@ class ColorDecoratorTest {
     assertEquals(0, testColorDecorator.loadPassenger(testPassenger4));
   }
 
+  /**
+   * Test if move works properly.
+   */
   @Test
   public void testMove() {
 
@@ -145,6 +158,9 @@ class ColorDecoratorTest {
     assertEquals(null, testColorDecorator.getNextStop());
   }
 
+  /**
+   * Test if provideInfo works properly.
+   */
   @Test
   public void testProvideInfo() {
     WebServerSession webServerSession = spy(WebServerSession.class);
@@ -169,189 +185,19 @@ class ColorDecoratorTest {
     assertEquals(expectedText, message.get("text").getAsString());
   }
 
-  @Test
-  void testGetCapacity() {
-    // Setup
-
-    // Run the test
-    final int result = testColorDecorator.getCapacity();
-
-    // Verify the results
-    assertEquals(3, result);
-  }
-
+  /**
+   * Test if getColor works properly.
+   */
   @Test
   void testGetColor() {
-    // Setup
 
-    // Run the test
     final int[] result = testColorDecorator.getColor();
-
-    // Verify the results
     assertArrayEquals(new int[]{122, 0, 25, 255}, result);
   }
 
-  @Test
-  void testGetCurrentCO2Emission() {
-    // Setup
-
-    // Run the test
-    final int result = testColorDecorator.getCurrentCO2Emission();
-
-    // Verify the results
-    assertEquals(1, result);
-  }
-
-  @Test
-  void testGetDistanceRemaining() {
-    // Setup
-
-    // Run the test
-    final double result = testColorDecorator.getDistanceRemaining();
-
-    // Verify the results
-    assertEquals(0.0, result, 0.0001);
-  }
-
-  @Test
-  void testGetId() {
-    // Setup
-
-    // Run the test
-    final int result = testColorDecorator.getId();
-
-    // Verify the results
-    assertEquals(1, result);
-  }
-
-  @Test
-  void testGetLine() {
-    // Setup
-
-    // Run the test
-    final Line result = testColorDecorator.getLine();
-
-    // Verify the results
-  }
-
-  @Test
-  void testGetName() {
-    // Setup
-
-    // Run the test
-    final String result = testColorDecorator.getName();
-
-    // Verify the results
-    assertEquals("testRouteOut1", result);
-  }
-
-  @Test
-  void testGetNextStop() {
-    // Setup
-
-    // Run the test
-    final Stop result = testColorDecorator.getNextStop();
-
-    // Verify the results
-  }
-
-  @Test
-  void testGetPassengerLoader() {
-    // Setup
-
-    // Run the test
-    final PassengerLoader result = testColorDecorator.getPassengerLoader();
-
-    // Verify the results
-  }
-
-  @Test
-  void testGetPassengerUnloader() {
-    // Setup
-
-    // Run the test
-    final PassengerUnloader result = testColorDecorator.getPassengerUnloader();
-
-    // Verify the results
-  }
-
-  @Test
-  void testGetPassengers() {
-    // Setup
-
-    // Run the test
-    final List<Passenger> result = testColorDecorator.getPassengers();
-
-    // Verify the results
-  }
-
-  @Test
-  void testGetPosition() {
-    // Setup
-
-    // Run the test
-    final Position result = testColorDecorator.getPosition();
-
-    // Verify the results
-  }
-
-  @Test
-  void testGetSpeed() {
-    // Setup
-
-    // Run the test
-    final double result = testColorDecorator.getSpeed();
-
-    // Verify the results
-    assertEquals(1.0, result, 0.0001);
-  }
-
-  @Test
-  void testGetType() {
-    // Setup
-
-    // Run the test
-    final String result = testColorDecorator.getType();
-
-    // Verify the results
-    assertEquals(SmallBus.SMALL_BUS_VEHICLE, result);
-  }
-
-
-  @Test
-  void testSetName() {
-    // Setup
-
-    // Run the test
-    testColorDecorator.setName("name");
-    assertEquals("name", testColorDecorator.getName());
-
-    // Verify the results
-  }
-
-  @Test
-  void testSetPosition() {
-    // Setup
-    final Position position = new Position(0.0, 0.0);
-
-    // Run the test
-    testColorDecorator.setPosition(position);
-
-    // Verify the results
-  }
-
-  @Test
-  void testSetVehicleSubject() {
-    // Setup
-    final VehicleConcreteSubject vehicleConcreteSubject =
-        new VehicleConcreteSubject(new WebServerSession());
-
-    // Run the test
-    testColorDecorator.setVehicleSubject(vehicleConcreteSubject);
-
-    // Verify the results
-  }
-
+  /**
+   * Test if update works properly.
+   */
   @Test
   public void testUpdate() {
 
@@ -374,6 +220,9 @@ class ColorDecoratorTest {
     assertEquals(null, testColorDecorator.getNextStop());
   }
 
+  /**
+   * Test if report works properly.
+   */
   @Test
   void testReport() {
     testColorDecorator.move();
@@ -404,6 +253,9 @@ class ColorDecoratorTest {
     }
   }
 
+  /**
+   * Test if getCo2 works properly.
+   */
   @Test
   public void testCurrentCO2Emission() {
     assertEquals(1, testColorDecorator.getCurrentCO2Emission());

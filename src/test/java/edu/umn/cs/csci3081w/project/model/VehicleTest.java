@@ -134,6 +134,9 @@ public class VehicleTest {
 
   }
 
+  /**
+   * Tests if move function works properly.
+   */
   @Test
   public void testMoveWhenTripIsComplete() {
 
@@ -160,6 +163,9 @@ public class VehicleTest {
 
   }
 
+  /**
+   * Tests if move function works properly.
+   */
   @Test
   public void testMoveWhenDistanceGreaterThanZero() {
     testVehicle.setDistanceRemaining(10.0);
@@ -197,6 +203,9 @@ public class VehicleTest {
 
   }
 
+  /**
+   * test if update works properly.
+   */
   @Test
   public void testUpdateWhenPassengerOn() {
 
@@ -233,6 +242,9 @@ public class VehicleTest {
     assertEquals(expectedText, message.get("text").getAsString());
   }
 
+  /**
+   * test if provideInfo works properly.
+   */
   @Test
   public void testProvideInfoWhenTripIsComplete() {
     WebServerSession webServerSession = spy(WebServerSession.class);
@@ -255,6 +267,9 @@ public class VehicleTest {
     assertEquals(expectedText, message.get("text").getAsString());
   }
 
+  /**
+   * test if provideInfo works properly.
+   */
   @Test
   public void testProvideInfoWithHistory() {
     WebServerSession webServerSession = spy(WebServerSession.class);
@@ -286,10 +301,21 @@ public class VehicleTest {
     assertEquals(expectedText, message.get("text").getAsString());
   }
 
+  /**
+   * test if getSpeed works properly.
+   */
   @Test
   public void testSetSpeed() {
     testVehicle.setSpeed(2.0);
     assertEquals(2.0, testVehicle.getSpeed());
+  }
+
+  /**
+   * test if getType works properly.
+   */
+  @Test
+  public void getType() {
+    assertEquals("", testVehicle.getType());
   }
 
 

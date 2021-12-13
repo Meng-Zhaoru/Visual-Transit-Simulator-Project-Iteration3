@@ -121,6 +121,9 @@ public class VehicleConcreteSubjectTest {
     assertEquals(expectedText, message.get("text").getAsString());
   }
 
+  /**
+   * Test notify function works properly.
+   */
   @Test
   public void testNotifyObserverDieselTrain() {
     WebServerSession webServerSession = spy(WebServerSession.class);

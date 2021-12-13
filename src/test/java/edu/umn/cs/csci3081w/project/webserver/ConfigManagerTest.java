@@ -51,6 +51,9 @@ public class ConfigManagerTest {
     assertEquals(5, storageFacility.getDieselTrainsNum());
   }
 
+  /**
+   * Test if readConfig works properly.
+   */
   @Test
   public void testReadConfigSpecialCase() {
     testConfigManger.readConfig(new Counter(), "src/main/resources/testConfig.txt");

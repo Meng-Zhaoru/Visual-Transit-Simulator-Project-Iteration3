@@ -78,6 +78,18 @@ public class StopTest {
   }
 
   /**
+   * Test if update works properly.
+   */
+  @Test
+  public void testUpdate() {
+    Stop stop = new Stop(0, "test stop", new Position(-93.243774, 44.972392));
+    Passenger passenger = new Passenger(1, "Kobe");
+    stop.addPassengers(passenger);
+    stop.update();
+    assertEquals(1, passenger.getWaitAtStop());
+  }
+
+  /**
    * Testing state of stop after adding passenger.
    */
   @Test
